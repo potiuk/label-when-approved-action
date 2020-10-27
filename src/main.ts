@@ -179,6 +179,24 @@ async function addComment(
   })
 }
 
+async function addCheck(
+  octokit: github.GitHub,
+  owner: string,
+  repo: string,
+  sha: string
+): Promise<void> {
+  core.info(`Adding check, sha: ${sha}`)
+  await octokit.checks.create({
+    repo,
+    owner,
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    head_sha: sha,
+    conclusion: 'action_required',
+    status: 'in_progress',
+    name: 'test check #1'
+  })
+}
+
 async function getWorkflowId(
   octokit: github.GitHub,
   runId: number,
@@ -326,6 +344,8 @@ async function run(): Promise<void> {
       if (comment !== '') {
         await addComment(octokit, owner, repo, pullRequest.number, comment)
       }
+      // TODO
+      await addCheck(octokit, repo, owner, sha)
     } else if (isLabelShouldBeRemoved) {
       await removeLabel(octokit, owner, repo, pullRequest.number, userLabel)
     }

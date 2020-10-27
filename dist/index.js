@@ -1597,6 +1597,20 @@ function addComment(octokit, owner, repo, pullRequestNumber, comment) {
         });
     });
 }
+function addCheck(octokit, owner, repo, sha) {
+    return __awaiter(this, void 0, void 0, function* () {
+        core.info(`Adding check, sha: ${sha}`);
+        yield octokit.checks.create({
+            repo,
+            owner,
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            head_sha: sha,
+            conclusion: 'action_required',
+            status: 'in_progress',
+            name: 'test check #1'
+        });
+    });
+}
 function getWorkflowId(octokit, runId, owner, repo) {
     return __awaiter(this, void 0, void 0, function* () {
         const reply = yield octokit.actions.getWorkflowRun({
@@ -1699,6 +1713,8 @@ function run() {
                 if (comment !== '') {
                     yield addComment(octokit, owner, repo, pullRequest.number, comment);
                 }
+                // TODO
+                yield addCheck(octokit, repo, owner, sha);
             }
             else if (isLabelShouldBeRemoved) {
                 yield removeLabel(octokit, owner, repo, pullRequest.number, userLabel);
