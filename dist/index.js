@@ -1605,7 +1605,7 @@ function addCheck(octokit, owner, repo, sha) {
             owner,
             // eslint-disable-next-line @typescript-eslint/camelcase
             head_sha: sha,
-            conclusion: 'action_required',
+            conclusion: 'neutral',
             status: 'in_progress',
             name: 'test check #1'
         });
