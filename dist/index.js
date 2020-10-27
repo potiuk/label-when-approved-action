@@ -1714,7 +1714,7 @@ function run() {
                     yield addComment(octokit, owner, repo, pullRequest.number, comment);
                 }
                 // TODO
-                yield addCheck(octokit, repo, owner, sha);
+                yield addCheck(octokit, owner, repo, sha);
             }
             else if (isLabelShouldBeRemoved) {
                 yield removeLabel(octokit, owner, repo, pullRequest.number, userLabel);

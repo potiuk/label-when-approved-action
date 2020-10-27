@@ -345,7 +345,7 @@ async function run(): Promise<void> {
         await addComment(octokit, owner, repo, pullRequest.number, comment)
       }
       // TODO
-      await addCheck(octokit, repo, owner, sha)
+      await addCheck(octokit, owner, repo, sha)
     } else if (isLabelShouldBeRemoved) {
       await removeLabel(octokit, owner, repo, pullRequest.number, userLabel)
     }
